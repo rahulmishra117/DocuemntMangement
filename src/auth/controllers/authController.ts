@@ -46,4 +46,23 @@ export class AuthController {
             });
         }
     }
+
+    @Post('/logout')
+    async logout(@Res() res: Response): Promise<void> {
+        try {
+            // Here you can handle any cleanup or token invalidation logic if needed
+            res.clearCookie('auth_token'); // If you're using cookies to store the JWT token
+            res.status(HttpStatus.OK).json({
+                status: HttpStatus.OK,
+                message: 'User logged out successfully',
+            });
+        } catch (error) {
+            console.error('Error during logout:', error.message);
+            res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+                status: HttpStatus.INTERNAL_SERVER_ERROR,
+                message: 'Logout failed',
+            });
+        }
+    }
+
 }
